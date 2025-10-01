@@ -32,6 +32,17 @@ class Perceptron:
 
         for _ in range(self.n_iter):
             errors = 0
+            """
+                X: [
+                    [5.1, 2.3],
+                    ...
+                ]
+                y: [0, 1, 0, 0, 1]
+
+
+                xi: [5.1, 2.3]
+                target: 0/1
+            """
             for xi, target in zip(X, y):
                 delta = self.eta * (target - self.predict(xi))
                 self.w_ += delta * xi  # Update weights
