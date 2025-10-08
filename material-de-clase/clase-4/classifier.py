@@ -61,6 +61,7 @@ class Perceptron:
         return self.threshold_function(X)
 
     def net_z(self, X: np.ndarray) -> np.float32:
+        print(np.dot(X, self.w_) + self.b_)
         return np.dot(X, self.w_) + self.b_  # Use bias separately
     
     def threshold_function(self, X):
