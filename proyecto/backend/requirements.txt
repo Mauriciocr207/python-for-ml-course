@@ -1,0 +1,6 @@
+Flask==3.1.0
+flask-cors==6.0.1
+numpy==2.3.3
+python-dotenv==1.1.1
+tensorflow==2.20.0
+tensorflow-metadata==1.17.2
