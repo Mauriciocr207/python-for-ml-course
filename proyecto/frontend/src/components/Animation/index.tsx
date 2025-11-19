@@ -5,12 +5,12 @@ import { LuBrainCircuit } from "react-icons/lu";
 
 gsap.registerPlugin(MotionPathPlugin);
 
-type AnimationProps = {
-  pathEl: SVGPathElement;
-  circleEl: SVGCircleElement;
-  maskEl: SVGCircleElement;
-  radialEl: SVGRadialGradientElement;
-};
+// type AnimationProps = {
+//   pathEl: SVGPathElement;
+//   circleEl: SVGCircleElement;
+//   maskEl: SVGCircleElement;
+//   radialEl: SVGRadialGradientElement;
+// };
 
 const paths = [
   "M843.505 284.659L752.638 284.659C718.596 284.659 684.866 280.049 653.251 271.077L598.822 255.629L0.675021 1.00011",
@@ -27,21 +27,21 @@ const getRandomColor = () =>
   dotColors[Math.floor(Math.random() * dotColors.length)];
 
 export default function Animation() {
-  const onUpdate = ({
-    latest,
-    pathEl,
-    circleEl,
-    maskEl,
-    radialEl,
-  }: { latest: number } & AnimationProps) => {
-    const p = pathEl.getPointAtLength(latest);
-    circleEl.setAttribute("cx", p.x.toString());
-    circleEl.setAttribute("cy", p.y.toString());
-    maskEl.setAttribute("cx", p.x.toString());
-    maskEl.setAttribute("cy", p.y.toString());
-    radialEl.setAttribute("cx", p.x.toString());
-    radialEl.setAttribute("cy", p.y.toString());
-  };
+//   const onUpdate = ({
+//     latest,
+//     pathEl,
+//     circleEl,
+//     maskEl,
+//     radialEl,
+//   }: { latest: number } & AnimationProps) => {
+//     const p = pathEl.getPointAtLength(latest);
+//     circleEl.setAttribute("cx", p.x.toString());
+//     circleEl.setAttribute("cy", p.y.toString());
+//     maskEl.setAttribute("cx", p.x.toString());
+//     maskEl.setAttribute("cy", p.y.toString());
+//     radialEl.setAttribute("cx", p.x.toString());
+//     radialEl.setAttribute("cy", p.y.toString());
+//   };
 
   const getStartAnimElements = (index: number) => {
     const pathEl = document.querySelector(`#path_${index}`) as SVGPathElement;
@@ -59,7 +59,7 @@ export default function Animation() {
   };
 
   useEffect(() => {
-    paths.forEach((path, index) => {
+    paths.forEach((_, index) => {
       const elements = getStartAnimElements(index);
 
       if (!elements.pathEl) return;
