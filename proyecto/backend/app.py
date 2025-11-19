@@ -22,7 +22,7 @@ print("url vite: "+origin_url)
 CORS(app, resources={
     r"/*": {
         "origins": [origin_url],
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "methods": ["POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"],
     }
 })
@@ -34,8 +34,8 @@ def apply_cors(response):
     req_origin = request.headers.get("Origin")
     if req_origin in allowed_origins:
         response.headers["Access-Control-Allow-Origin"] = req_origin
-    # response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
-    # response.headers["Access-Control-Allow-Methods"] = "POST,OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "POST,OPTIONS"
 
     return response
 
