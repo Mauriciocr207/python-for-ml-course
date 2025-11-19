@@ -50,7 +50,10 @@ def predict():
 
 if __name__ == "__main__":
     print("Starting Flask server...")
+    port = int(os.environ.get("PORT", 5000))  # usa port 5000 local o $PORT en Render
     app.run(
         debug=os.getenv("FLASK_ENV") == "development", 
-        use_reloader=False
+        use_reloader=False,
+        host="0.0.0.0",
+        port=port,
     )
