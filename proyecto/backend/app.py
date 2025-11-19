@@ -27,6 +27,19 @@ CORS(app, resources={
     }
 })
 
+@app.after_request
+def apply_cors(response):
+    allowed_origins = [origin_url]
+
+    req_origin = request.headers.get("Origin")
+    if req_origin in allowed_origins:
+        response.headers["Access-Control-Allow-Origin"] = req_origin
+    # response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
+    # response.headers["Access-Control-Allow-Methods"] = "POST,OPTIONS"
+
+    return response
+
+
 model = load_model()
 
 @app.route("/predict", methods=["POST", "OPTIONS"])
