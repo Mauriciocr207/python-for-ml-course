@@ -1,25 +1,27 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
+    --background: oklch(18.22% 0.00002 271.152);
+    --foreground: oklch(0.98 0 0);
+    --card: oklch(0.12 0 0);
+    --card-foreground: oklch(0.98 0 0);
+    --popover: oklch(0.12 0 0);
+    --popover-foreground: oklch(0.98 0 0);
+    --primary: oklch(0.58 0.24 280);
+    --primary-foreground: oklch(0.98 0 0);
+    --secondary: oklch(0.18 0 0);
+    --secondary-foreground: oklch(0.98 0 0);
+    --muted: oklch(0.18 0 0);
+    --muted-foreground: oklch(0.65 0 0);
+    --accent: oklch(0.58 0.24 280);
+    --accent-foreground: oklch(0.98 0 0);
     --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
+    --destructive-foreground: oklch(0.98 0 0);
+    --border: oklch(0.25 0 0);
+    --input: oklch(0.25 0 0);
+    --ring: oklch(0.58 0.24 280);
     --chart-1: oklch(0.646 0.222 41.116);
     --chart-2: oklch(0.6 0.118 184.704);
     --chart-3: oklch(0.398 0.07 227.392);
@@ -34,10 +36,224 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+
+    /* Racing lines animation offset variables */
+    --animations--line-1-offset: 0px;
+    --animations--line-2-offset: 0px;
+    --animations--line-3-offset: 0px;
+    --animations--line-4-offset: 0px;
 }
 
-body {
-    background-color: #f9f9f9;
-    background-image: radial-gradient(#e0e0e0 0.9px, transparent 0.5px);
-    background-size: 12px 12px;
+@theme inline {
+    --font-sans: var(--font-geist), "Geist", "Geist Fallback";
+    --font-mono: var(--font-geist-mono), "Geist Mono", "Geist Mono Fallback";
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer utilities {
+    .vite-gradient {
+        background: linear-gradient(135deg, #bd34fe 10%, #41d1ff 100%);
+    }
+
+    .vite-text-gradient {
+        background: linear-gradient(135deg, #bd34fe 10%, #41d1ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-glow {
+        box-shadow: 0 0 80px rgba(189, 52, 254, 0.3), 0 0 120px rgba(65, 209, 255, 0.2);
+    }
+
+    /* Added bg-lines-container with responsive scaling */
+    .bg-lines-container {
+        position: fixed;
+        inset: 0%;
+        z-index: -3;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    @media screen and (max-width: 991px) {
+        .bg-lines-container {
+            display: block;
+            flex-direction: row;
+            transform: scale(1.125);
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .bg-lines-container {
+            transform: scale(1.05);
+            object-fit: contain;
+        }
+    }
+
+    @media screen and (max-width: 479px) {
+        .bg-lines-container {
+            transform: scale(1.8);
+        }
+    }
+
+    /* Changed display from none to block so Spline viewer is visible */
+    .track {
+        position: fixed;
+        inset: 0%;
+        display: block;
+        margin-top: 0vh;
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Added racing line animations with varying speeds */
+    /* Reversed flow (0 to -3000px) and doubled animation durations */
+    @keyframes line-race {
+        from {
+            stroke-dashoffset: 0px;
+        }
+
+        to {
+            stroke-dashoffset: -3000px;
+        }
+    }
+
+    .animate-line-race-1 {
+        animation: line-race 1.6s ease-in-out infinite;
+    }
+
+    .animate-line-race-2 {
+        animation: line-race 1.2s ease-in-out infinite;
+    }
+
+    .animate-line-race-3 {
+        animation: line-race 2s ease-in-out infinite;
+    }
+
+    .animate-line-race-4 {
+        animation: line-race 1s ease-in-out infinite;
+    }
+
+    .animate-fade-in {
+        animation: fade-in 0.8s ease-out forwards;
+    }
+
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+    }
+
+    .animation-delay-200 {
+        animation-delay: 0.2s;
+        opacity: 0;
+    }
+
+    .animation-delay-400 {
+        animation-delay: 0.4s;
+        opacity: 0;
+    }
+
+    /* Refined glowing border effect with purple tones to match reference */
+    .glow-border {
+        position: relative;
+        border-radius: 1.5rem;
+        overflow: hidden;
+    }
+
+    .glow-border::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(120deg, rgba(168, 85, 247, 0.4), rgba(81, 0, 253, 0.2), rgba(168, 85, 247, 0.4));
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+
+    .glow-border::after {
+        content: "";
+        position: absolute;
+        inset: -20px;
+        background: radial-gradient(circle 150px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(168, 85, 247, 0.15),
+                rgba(81, 0, 253, 0.08),
+                transparent 70%);
+        transition: opacity 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
+        border-radius: inherit;
+    }
+
+    .glow-border:hover::after {
+        opacity: 1;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50 transition-all duration-150;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        background-image: radial-gradient(#e0e0e013 0.9px, transparent 0.5px);
+        background-size: 11px 11px;
+    }
 }

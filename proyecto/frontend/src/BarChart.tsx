@@ -7,7 +7,7 @@ export default function BarChart({ values, selectedClass }: { values: number[], 
         data: Array.from({ length: 10 }, (_, i) => `${i}`),
         axisLabel: {
           fontSize: 16, // tamaño de texto del eje X
-          color: "#333",
+          color: "white",
         },
       },
       yAxis: {
@@ -16,7 +16,7 @@ export default function BarChart({ values, selectedClass }: { values: number[], 
         max: 1,
         axisLabel: {
           fontSize: 16, // tamaño de texto del eje Y
-          color: "#333",
+          color: "white",
         },
       },
       series: [
@@ -27,7 +27,7 @@ export default function BarChart({ values, selectedClass }: { values: number[], 
                   value,
                   itemStyle: {
                     borderRadius: [6, 6, 0, 0],
-                    color: "#5470c6",
+                    color: "#bd34fe",
                   },
                 }
               : value;
@@ -36,7 +36,7 @@ export default function BarChart({ values, selectedClass }: { values: number[], 
           barWidth: "50%",
           itemStyle: {
             borderRadius: [6, 6, 0, 0],
-            color: "#91cc75",
+            color: "#41d1ff",
           },
         },
       ],
@@ -51,7 +51,7 @@ export default function BarChart({ values, selectedClass }: { values: number[], 
       },
     };
   return (
-    <div className="w-[472px] h-[472px]">
+    <div className="w-[380px] h-[380px]">
       <ReactECharts
         option={barOptions}
         style={{ height: "100%", width: "100%" }}

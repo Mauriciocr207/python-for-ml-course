@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import resampleCanvas from "./utils/resampleCanvas";
 import BarChart from "./BarChart";
+import { LuBrainCircuit } from "react-icons/lu";
+import { FaGithub } from "react-icons/fa";
 
 const { VITE_PREDICT_URL } = import.meta.env;
 
@@ -8,7 +10,6 @@ export default function App() {
   const inputCanvasRef = useRef<HTMLCanvasElement>(null);
   const outputCanvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [initialized, setInitialized] = useState(false);
   const [result, setResult] = useState<{
     predicted_class: number;
     softmax: number[];
@@ -20,10 +21,6 @@ export default function App() {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-
-    // Set canvas size
-    canvas.width = 400;
-    canvas.height = 400;
 
     // Fill with white background
     ctx.fillStyle = "white";
@@ -111,15 +108,10 @@ export default function App() {
       resampleCanvas(canvas, 28, 28, outputCanvasRef.current);
       predict();
     }
-    if (!initialized) {
-      setInitialized(true);
-    }
   };
 
   const predict = async () => {
     try {
-      if (!initialized) return;
-
       if (!outputCanvasRef.current) return;
 
       const imgArray = imgToArray(outputCanvasRef.current);
@@ -150,45 +142,82 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-purple-100/40 via-purple-50/40 to-blue-50/40">
-      {/* Header */}
-      <header className="flex items-center w-full justify-center px-8 mb-6">
-        <div className="text-center mb-12">
-          <h1 className="text-[100px] font-bold text-purple-600">Numi</h1>
-          <h2 className="text-2xl font-bold text-gray-400">
-            Dibuja un número aquí
-          </h2>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex items-center justify-center px-4 gap-[400px]">
-        {/* Drawing Canvas Container */}
-        <div className="relative mb-8">
-          <div className="absolute inset-0 bg-linear-to-r from-purple-400 via-blue-400 to-purple-400 rounded-3xl blur-xl opacity-60"></div>
-          <div className="relative bg-white rounded-3xl p-8 shadow-2xl">
-            <canvas
-              ref={inputCanvasRef}
-              onMouseDown={startDrawing}
-              onMouseMove={draw}
-              onMouseUp={stopDrawing}
-              className="border-4 border-gray-100 rounded-xl cursor-crosshair shadow-inner"
-            />
-            <canvas
-              ref={outputCanvasRef}
-              width={28}
-              height={28}
-              className="hidden"
-            ></canvas>
+    <>
+      <div className="min-h-screen text-white">
+        {/* Navigation */}
+        <nav className="border-b border-zinc-800 bg-[#0a0a0a]/80 backdrop-blur-sm fixed top-0 w-full z-50">
+          <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-12">
+              <a href="/" className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-linear-to-br from-[#bd34fe] to-[#41d1ff] rounded-lg flex items-center justify-center">
+                  <LuBrainCircuit className="size-5" />
+                </div>
+                <span className="font-semibold text-lg">NUMI</span>
+              </a>
+            </div>
+            <div className="flex items-center gap-4">
+              <button className="bg-linear-to-r from-[#bd34fe] to-[#41d1ff] hover:opacity-90 text-white border-0 p-2 rounded-lg cursor-pointer">
+                <FaGithub />
+              </button>
+            </div>
           </div>
-        </div>
-        {result && (
-          <BarChart
-            values={result.softmax}
-            selectedClass={result.predicted_class}
-          />
-        )}
-      </main>
-    </div>
+        </nav>
+
+        {/* Hero Section */}
+        <section className="pt-28 px-6">
+          <div className="container mx-auto max-w-5xl text-center relative">
+            <div className="mb-6 bg-[#bd34fe]/10 text-[#bd34fe] border border-[#bd34fe]/20 hover:bg-[#bd34fe]/20 w-fit rounded-full flex items-center px-2 py-1 text-[10px] font-bold gap-2 m-auto ">
+              <LuBrainCircuit className="size-4" />
+              AI powered
+            </div>
+
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-balance">
+              Predicción inteligente
+              <br />
+              <span className="vite-text-gradient">con solo un trazo</span>
+            </h1>
+            {/* <div className="">
+              <Animation />
+            </div> */}
+          </div>
+
+          <div className="container flex justify-center items-center mx-auto mt-20 gap-20">
+            <div className="container relative w-fit">
+              <div className="absolute inset-0 bg-linear-to-r from-[#bd34fe]/50 to-[#41d1ff]/50 blur-3xl rounded-full" />
+              <div className="relative bg-[#1a1a1a] rounded-2xl border border-zinc-800 shadow-2xl p-6 flex gap-2 flex-col">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                </div>
+                <div className="relative rounded-lg font-mono text-sm">
+                  <canvas
+                    ref={inputCanvasRef}
+                    onMouseDown={startDrawing}
+                    onMouseMove={draw}
+                    onMouseUp={stopDrawing}
+                    className="border-4 border-gray-100 rounded-xl cursor-crosshair shadow-inner"
+                    width={300}
+                    height={300}
+                  />
+                  <canvas
+                    ref={outputCanvasRef}
+                    width={28}
+                    height={28}
+                    className="hidden"
+                  ></canvas>
+                </div>
+              </div>
+            </div>
+            {result && (
+              <BarChart
+                values={result.softmax}
+                selectedClass={result.predicted_class}
+              />
+            )}
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
