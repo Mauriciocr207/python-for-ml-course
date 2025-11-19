@@ -29,9 +29,12 @@ CORS(app, resources={
 
 model = load_model()
 
-@app.route("/predict", methods=["POST"])
+@app.route("/predict", methods=["POST", "OPTIONS"])
 def predict():
     try:
+        if request.method == "OPTIONS":
+            return jsonify({"status": "OK"}), 204
+        
         data = request.get_json()
         img_list = data.get("image")
         
