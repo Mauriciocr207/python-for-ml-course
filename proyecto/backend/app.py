@@ -31,11 +31,13 @@ CORS(app, resources={
 def apply_cors(response):
     allowed_origins = [origin_url]
 
-    req_origin = request.headers.get("Origin")
-    if req_origin in allowed_origins:
-        response.headers["Access-Control-Allow-Origin"] = req_origin
+    # req_origin = request.headers.get("Origin")
+    # if req_origin in allowed_origins:
+    #     response.headers["access-control-allow-origin"] = req_origin
+        
+    response.headers["access-control-allow-origin"] = origin_url
     response.headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization"
-    response.headers["Access-Control-Allow-Methods"] = "POST,OPTIONS"
+    response.headers["Access-Control-Allow-Methods"] = "POST,OPTIONS,HOLA"
 
     return response
 
